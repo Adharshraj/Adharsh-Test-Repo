@@ -6,438 +6,266 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Adharsh Raj M R</title>
     <link rel="icon" type="image/png" href="favicon_AMR_2.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/aos.css?ver=1.1.0" rel="stylesheet">
     <link href="css/bootstrap.min.css?ver=1.1.0" rel="stylesheet">
     <link href="css/main.css?ver=1.1.0" rel="stylesheet">
-    <noscript>
-      <style type="text/css">
-        [data-aos] {
-            opacity: 1 !important;
-            transform: translate(0) scale(1) !important;
-        }
-      </style>
-    </noscript>
+    <noscript><style>[data-aos]{opacity:1!important;transform:translate(0) scale(1)!important;}</style></noscript>
 
     <style>
-      /* ── Design Tokens ── */
       :root {
-        --ink:      #0d0d0d;
-        --paper:    #f7f5f0;
-        --accent:   #1a6b47;
-        --accent2:  #c8a96e;
-        --muted:    #6b6b6b;
-        --card-bg:  #ffffff;
-        --border:   #e2ddd6;
-        --ff-head:  'Playfair Display', Georgia, serif;
-        --ff-body:  'DM Sans', sans-serif;
-        --radius:   12px;
-        --shadow:   0 4px 32px rgba(0,0,0,.08);
-        --shadow-lg:0 12px 48px rgba(0,0,0,.14);
+        --bg:       #0a0c10;
+        --bg-mid:   #111318;
+        --bg-card:  #161920;
+        --gold:     #c9a84c;
+        --gold-lt:  #e8c878;
+        --gold-dim: rgba(201,168,76,.14);
+        --teal:     #3ecfb2;
+        --th:       #f0ede6;
+        --tb:       #a8a5a0;
+        --tm:       #5e5c59;
+        --bord:     rgba(255,255,255,.07);
+        --bord2:    rgba(201,168,76,.28);
+        --serif:    'Cormorant Garamond',Georgia,serif;
+        --sans:     'Inter',sans-serif;
+        --r:        10px;
+      }
+      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+      html{scroll-behavior:smooth;}
+      body{font-family:var(--sans);background:var(--bg);color:var(--tb);font-size:15px;line-height:1.75;overflow-x:hidden;}
+      ::-webkit-scrollbar{width:4px;}
+      ::-webkit-scrollbar-track{background:var(--bg);}
+      ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+
+      /* NAV */
+      .navbar{
+        position:fixed;top:0;left:0;right:0;z-index:100;
+        display:flex;align-items:center;justify-content:flex-end;
+        padding:1.1rem 3rem;
+        background:rgba(10,12,16,.88);
+        backdrop-filter:blur(18px);
+        border-bottom:1px solid var(--bord);
+      }
+      .nav-links{list-style:none;display:flex;gap:2.5rem;}
+      .nav-links a{
+        font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+        color:var(--tb);text-decoration:none;position:relative;padding-bottom:3px;transition:color .2s;
+      }
+      .nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:100%;height:1px;background:var(--gold);transition:right .3s;}
+      .nav-links a:hover{color:var(--gold);}
+      .nav-links a:hover::after{right:0;}
+      .mob-btn{display:none;background:none;border:none;cursor:pointer;padding:.4rem;}
+      .mob-bar{display:block;width:22px;height:1.5px;background:var(--tb);margin:5px 0;}
+
+      /* HERO */
+      .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+      .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.22) saturate(.5);}
+      .hero-veil{position:absolute;inset:0;background:linear-gradient(170deg,rgba(10,12,16,.2) 0%,rgba(10,12,16,.65) 55%,var(--bg) 100%);}
+      .hero-deco{
+        position:absolute;width:500px;height:500px;border-radius:50%;
+        border:1px solid rgba(201,168,76,.1);
+        top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
+      }
+      .hero-deco::after{content:'';position:absolute;inset:28px;border-radius:50%;border:1px solid rgba(201,168,76,.06);}
+      .hero-cnt{position:relative;z-index:2;text-align:center;padding:2rem 1rem;}
+      .cc-profile-image{
+        width:128px;height:128px;border-radius:50%;margin:0 auto 1.5rem;
+        border:2px solid var(--gold);padding:3px;background:var(--bg);
+        box-shadow:0 0 50px rgba(201,168,76,.22);
+      }
+      .cc-profile-image img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;}
+      .hero-badge{
+        display:inline-block;font-size:.65rem;font-weight:500;letter-spacing:.22em;
+        text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
+      }
+      .h2.title{
+        font-family:var(--serif);font-size:clamp(2.6rem,6vw,5rem);
+        font-weight:300;color:var(--th);line-height:1.1;margin-bottom:.9rem;
+      }
+      .category.text-white{font-size:.85rem;color:rgba(240,237,230,.7)!important;letter-spacing:.05em;margin-bottom:2.5rem;}
+      a.btn.btn-primary.smooth-scroll{
+        display:inline-block;
+        border:1px solid var(--gold);background:transparent;
+        color:var(--gold)!important;
+        font-family:var(--sans);font-size:.7rem;font-weight:500;
+        letter-spacing:.2em;text-transform:uppercase;
+        padding:.85rem 2.5rem;border-radius:0;
+        text-decoration:none;transition:background .25s,color .25s,transform .2s,box-shadow .25s;
+      }
+      a.btn.btn-primary.smooth-scroll:hover{
+        background:var(--gold);color:var(--bg)!important;
+        transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,.28);
       }
 
-      /* ── Reset / Base ── */
-      *, *::before, *::after { box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
-      body {
-        font-family: var(--ff-body);
-        background: var(--paper);
-        color: var(--ink);
-        font-size: 15px;
-        line-height: 1.7;
-        margin: 0;
+      /* SECTIONS */
+      .section{padding:96px 0;position:relative;z-index:1;}
+      .sec-alt{background:var(--bg-mid);}
+      .wrap{max-width:1080px;margin:0 auto;padding:0 2rem;}
+      .sec-head{text-align:center;margin-bottom:3.5rem;}
+      .sec-eye{font-size:.63rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+      .sec-title,.h4.text-center.mb-4.title{
+        font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.6rem);
+        font-weight:300;color:var(--th);line-height:1.2;margin-bottom:.7rem;
+      }
+      .sec-rule{width:36px;height:1px;background:var(--gold);margin:.7rem auto 0;}
+
+      /* CARDS */
+      .glass{
+        background:var(--bg-card);border:1px solid var(--bord);
+        border-radius:var(--r);padding:2.2rem 2.5rem;position:relative;overflow:hidden;
+        transition:border-color .3s,transform .3s;
+      }
+      .glass::before{
+        content:'';position:absolute;top:0;left:0;right:0;height:2px;
+        background:linear-gradient(90deg,transparent,var(--gold),transparent);
+        opacity:0;transition:opacity .3s;
+      }
+      .glass:hover{border-color:var(--bord2);transform:translateY(-3px);}
+      .glass:hover::before{opacity:1;}
+      .card-lbl{
+        font-family:var(--serif);font-size:1.35rem;font-weight:400;
+        color:var(--th);margin-bottom:1.1rem;
+        display:flex;align-items:center;gap:.6rem;
+      }
+      .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+
+      /* ABOUT */
+      .about-2col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+      .about-p{font-size:.88rem;color:var(--tb);line-height:1.9;}
+      .irow{display:flex;gap:.9rem;padding:.6rem 0;border-bottom:1px solid var(--bord);align-items:flex-start;}
+      .irow:last-child{border-bottom:none;}
+      .ikey{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;font-weight:600;color:var(--gold);min-width:78px;padding-top:2px;}
+      .ival{font-size:.85rem;color:var(--tb);}
+      .ival a{color:var(--teal);text-decoration:none;}
+      .ival a:hover{text-decoration:underline;}
+
+      /* SKILLS */
+      .skills-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.9rem;}
+      .sk{
+        background:var(--bg-card);border:1px solid var(--bord);border-radius:var(--r);
+        padding:1.1rem 1.4rem;transition:border-color .3s,transform .3s;
+      }
+      .sk:hover{border-color:var(--bord2);transform:translateY(-2px);}
+      .sk-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem;}
+      .sk-name{font-size:.75rem;font-weight:500;letter-spacing:.05em;color:var(--th);}
+      .sk-pct{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--gold);}
+      .sk-track{height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;}
+      .sk-fill{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:2px;transition:width 1.4s cubic-bezier(.4,0,.2,1);}
+
+      /* PROJECTS */
+      .proj-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1.4rem;}
+      .proj-card{
+        background:var(--bg-card);border:1px solid var(--bord);border-radius:var(--r);
+        overflow:hidden;text-decoration:none;color:inherit;display:block;
+        transition:border-color .3s,transform .3s,box-shadow .3s;
+      }
+      .proj-card:hover{border-color:var(--bord2);transform:translateY(-6px);box-shadow:0 20px 55px rgba(0,0,0,.55);text-decoration:none;color:inherit;}
+      .proj-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:brightness(.75) saturate(.6);transition:filter .3s;}
+      .proj-card:hover .proj-img{filter:brightness(.95) saturate(1);}
+      .proj-body{padding:1.3rem 1.5rem 1.5rem;}
+      .proj-title{font-family:var(--serif);font-size:1.25rem;font-weight:400;color:var(--th);margin-bottom:.45rem;}
+      .proj-desc{font-size:.82rem;color:var(--tb);line-height:1.7;margin-bottom:.9rem;}
+      .proj-lnk{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);}
+
+      /* TIMELINE */
+      .tl{max-width:740px;margin:0 auto;}
+      .tl-item{display:grid;grid-template-columns:155px 1fr;gap:0 2rem;position:relative;padding-bottom:2.8rem;}
+      .tl-item:last-child{padding-bottom:0;}
+      .tl-item::after{
+        content:'';position:absolute;
+        left:155px;top:8px;bottom:0;width:1px;
+        background:linear-gradient(180deg,var(--gold),transparent);
+        transform:translateX(-50%);
+      }
+      .tl-item:last-child::after{display:none;}
+      .tl-l{text-align:right;padding-top:.15rem;}
+      .tl-period{font-size:.67rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);line-height:1.5;}
+      .tl-org{font-size:.77rem;color:var(--tm);margin-top:.15rem;}
+      .tl-r{border-left:1px solid var(--bord);padding-left:1.9rem;position:relative;}
+      .tl-dot{position:absolute;left:-6px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--gold-dim);}
+      .tl-role{font-family:var(--serif);font-size:1.18rem;font-weight:400;color:var(--th);margin-bottom:.45rem;}
+      .tl-desc{font-size:.84rem;color:var(--tb);line-height:1.8;}
+
+      /* RESUME */
+      .res-band{
+        display:flex;align-items:center;gap:2rem;flex-wrap:wrap;
+        background:var(--bg-card);border:1px solid var(--bord2);border-radius:var(--r);
+        padding:2.5rem 3rem;position:relative;overflow:hidden;
+      }
+      .res-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(201,168,76,.07),transparent 60%);pointer-events:none;}
+      .res-text{flex:1;min-width:200px;}
+      .res-text h5{font-family:var(--serif);font-size:1.55rem;font-weight:300;color:var(--th);margin-bottom:.35rem;}
+      .res-text p{font-size:.84rem;color:var(--tb);}
+      .btn-dl{
+        display:inline-flex;align-items:center;gap:.65rem;
+        background:var(--gold);color:var(--bg)!important;
+        font-family:var(--sans);font-size:.69rem;font-weight:600;
+        letter-spacing:.17em;text-transform:uppercase;
+        padding:.9rem 2rem;border-radius:3px;
+        text-decoration:none;white-space:nowrap;
+        transition:background .25s,transform .2s,box-shadow .25s;flex-shrink:0;
+      }
+      .btn-dl:hover{background:var(--gold-lt);transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.3);text-decoration:none;}
+
+      /* CONTACT */
+      .contact-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1.2rem;}
+      .cc{
+        background:var(--bg-card);border:1px solid var(--bord);border-radius:var(--r);
+        padding:1.7rem;display:flex;align-items:flex-start;gap:1.1rem;
+        transition:border-color .3s,transform .3s;
+      }
+      .cc:hover{border-color:var(--bord2);transform:translateY(-3px);}
+      .cc-icon{
+        width:40px;height:40px;border-radius:8px;
+        background:var(--gold-dim);border:1px solid var(--bord2);
+        display:flex;align-items:center;justify-content:center;
+        color:var(--gold);font-size:.9rem;flex-shrink:0;
+      }
+      .cc-lbl{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--tm);margin-bottom:.25rem;}
+      .cc-val{font-size:.86rem;color:var(--tb);word-break:break-all;}
+      .cc-val a{color:var(--teal);text-decoration:none;}
+      .cc-val a:hover{text-decoration:underline;}
+
+      /* FOOTER */
+      .ft{
+        background:var(--bg);text-align:center;
+        padding:1.4rem;font-size:.68rem;letter-spacing:.1em;
+        color:var(--tm);border-top:1px solid var(--bord);
+        position:relative;z-index:1;
       }
 
-      /* ── Navbar ── */
-      .navbar {
-        background: rgba(247,245,240,.92) !important;
-        backdrop-filter: saturate(180%) blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--border);
-        padding: 0.9rem 1rem;
-        transition: background .3s;
-      }
-      .navbar .navbar-brand { display: none; }
-      .navbar-nav .nav-link {
-        font-family: var(--ff-body);
-        font-size: 0.82rem;
-        font-weight: 500;
-        letter-spacing: .12em;
-        text-transform: uppercase;
-        color: var(--ink) !important;
-        padding: .4rem 1rem !important;
-        position: relative;
-      }
-      .navbar-nav .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: 0; left: 50%; right: 50%;
-        height: 2px;
-        background: var(--accent);
-        transition: left .25s, right .25s;
-      }
-      .navbar-nav .nav-link:hover::after { left: 1rem; right: 1rem; }
-      .navbar-toggler { border: none; background: none; }
-      .navbar-toggler-bar {
-        display: block;
-        width: 24px; height: 2px;
-        background: var(--ink);
-        margin: 5px 0;
-        transition: all .3s;
-      }
-
-      /* ── Hero ── */
-      .page-header {
-        position: relative;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-      }
-      .page-header-image {
-        position: absolute;
-        inset: 0;
-        background-size: cover;
-        background-position: center;
-        filter: brightness(.45);
-      }
-      .page-header::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(160deg, rgba(26,107,71,.55) 0%, rgba(13,13,13,.7) 100%);
-        z-index: 1;
-      }
-      .content-center {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        padding: 2rem 1rem;
-      }
-      .cc-profile-image {
-        width: 140px; height: 140px;
-        border-radius: 50%;
-        margin: 0 auto 1.5rem;
-        border: 4px solid var(--accent2);
-        overflow: hidden;
-        box-shadow: 0 0 0 8px rgba(200,169,110,.2);
-      }
-      .cc-profile-image img { width: 100%; height: 100%; object-fit: cover; }
-      .hero-name {
-        font-family: var(--ff-head);
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        font-weight: 700;
-        color: #fff;
-        margin: 0 0 .5rem;
-        text-shadow: 0 2px 20px rgba(0,0,0,.4);
-      }
-      .hero-sub {
-        font-size: .95rem;
-        letter-spacing: .08em;
-        color: rgba(255,255,255,.82);
-        margin-bottom: 2rem;
-      }
-      .hero-badge {
-        display: inline-block;
-        background: rgba(200,169,110,.18);
-        border: 1px solid var(--accent2);
-        color: var(--accent2);
-        font-size: .72rem;
-        font-weight: 600;
-        letter-spacing: .14em;
-        text-transform: uppercase;
-        padding: .3rem .9rem;
-        border-radius: 100px;
-        margin-bottom: 1.8rem;
-      }
-      .btn-hire {
-        display: inline-block;
-        background: var(--accent);
-        color: #fff !important;
-        font-weight: 600;
-        font-size: .85rem;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-        padding: .85rem 2.2rem;
-        border-radius: 4px;
-        text-decoration: none;
-        transition: background .25s, transform .2s, box-shadow .25s;
-        box-shadow: 0 4px 20px rgba(26,107,71,.35);
-      }
-      .btn-hire:hover {
-        background: #155c3c;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 28px rgba(26,107,71,.45);
-        color: #fff !important;
-        text-decoration: none;
-      }
-
-      /* ── Sections ── */
-      .section {
-        padding: 80px 0;
-      }
-      .section-title {
-        font-family: var(--ff-head);
-        font-size: 1.85rem;
-        font-weight: 700;
-        color: var(--ink);
-        margin-bottom: .3rem;
-      }
-      .section-title-wrap {
-        text-align: center;
-        margin-bottom: 3rem;
-      }
-      .section-title-wrap .underline {
-        display: inline-block;
-        width: 52px; height: 3px;
-        background: var(--accent);
-        border-radius: 2px;
-        margin-top: .4rem;
-      }
-
-      /* ── Cards ── */
-      .card {
-        background: var(--card-bg);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        margin-bottom: 1.5rem;
-        overflow: hidden;
-        transition: transform .25s, box-shadow .25s;
-      }
-      .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-      .card-body { padding: 2rem; }
-
-      /* ── About ── */
-      #about .section-inner { display: flex; gap: 2rem; flex-wrap: wrap; }
-      #about .about-text { flex: 1; min-width: 260px; }
-      #about .about-info { flex: 1; min-width: 260px; }
-      .about-text p { color: var(--muted); font-size: .95rem; }
-      .info-row {
-        display: flex;
-        gap: 1rem;
-        padding: .6rem 0;
-        border-bottom: 1px solid var(--border);
-        font-size: .88rem;
-      }
-      .info-row:last-child { border-bottom: none; }
-      .info-label {
-        font-weight: 600;
-        font-size: .72rem;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-        color: var(--accent);
-        min-width: 90px;
-        padding-top: .1rem;
-      }
-      .info-value { color: var(--ink); }
-      .info-value a { color: var(--accent); text-decoration: none; }
-      .info-value a:hover { text-decoration: underline; }
-
-      /* ── Skills ── */
-      #skill { background: #f0ede6; }
-      .skill-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; }
-      .skill-item { background: var(--card-bg); border-radius: var(--radius); padding: 1.2rem 1.5rem; border: 1px solid var(--border); }
-      .skill-name {
-        font-size: .8rem;
-        font-weight: 600;
-        letter-spacing: .08em;
-        text-transform: uppercase;
-        color: var(--ink);
-        margin-bottom: .7rem;
-        display: flex;
-        justify-content: space-between;
-      }
-      .skill-pct { color: var(--accent); font-weight: 700; }
-      .skill-bar { background: #e8e4dc; border-radius: 100px; height: 6px; overflow: hidden; }
-      .skill-fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--accent), var(--accent2));
-        border-radius: 100px;
-        width: 0;
-        transition: width 1.2s cubic-bezier(.4,0,.2,1);
-      }
-
-      /* ── Projects ── */
-      .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-      .project-card {
-        background: var(--card-bg);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        overflow: hidden;
-        transition: transform .25s, box-shadow .25s;
-        text-decoration: none;
-        color: var(--ink);
-        display: block;
-      }
-      .project-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); text-decoration: none; color: var(--ink); }
-      .project-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
-      .project-img-placeholder {
-        width: 100%; aspect-ratio: 16/9;
-        background: linear-gradient(135deg, #1a6b47 0%, #c8a96e 100%);
-        display: flex; align-items: center; justify-content: center;
-      }
-      .project-body { padding: 1.4rem; }
-      .project-title {
-        font-family: var(--ff-head);
-        font-size: 1.15rem;
-        font-weight: 700;
-        margin-bottom: .5rem;
-      }
-      .project-desc { font-size: .85rem; color: var(--muted); line-height: 1.6; }
-      .project-link-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: .35rem;
-        margin-top: .9rem;
-        font-size: .75rem;
-        font-weight: 600;
-        letter-spacing: .08em;
-        text-transform: uppercase;
-        color: var(--accent);
-      }
-      .project-link-tag i { font-size: .65rem; }
-
-      /* ── Timeline (Experience / Education) ── */
-      .timeline { position: relative; padding-left: 36px; }
-      .timeline::before {
-        content: '';
-        position: absolute;
-        left: 10px; top: 0; bottom: 0;
-        width: 2px;
-        background: linear-gradient(180deg, var(--accent), var(--accent2));
-      }
-      .timeline-item { position: relative; margin-bottom: 2.5rem; }
-      .timeline-dot {
-        position: absolute;
-        left: -30px; top: 4px;
-        width: 14px; height: 14px;
-        border-radius: 50%;
-        background: var(--accent);
-        border: 3px solid var(--paper);
-        box-shadow: 0 0 0 2px var(--accent);
-      }
-      .timeline-period {
-        font-size: .72rem;
-        font-weight: 600;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-        color: var(--accent2);
-        margin-bottom: .25rem;
-      }
-      .timeline-org {
-        font-size: .78rem;
-        font-weight: 600;
-        color: var(--muted);
-        margin-bottom: .2rem;
-      }
-      .timeline-role {
-        font-family: var(--ff-head);
-        font-size: 1.05rem;
-        font-weight: 700;
-        color: var(--ink);
-        margin-bottom: .5rem;
-      }
-      .timeline-desc { font-size: .88rem; color: var(--muted); }
-
-      /* ── Resume ── */
-      #resume { background: #f0ede6; }
-      .resume-card {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-        flex-wrap: wrap;
-        background: var(--card-bg);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 2rem 2.5rem;
-        box-shadow: var(--shadow);
-      }
-      .resume-text { flex: 1; min-width: 220px; }
-      .resume-text h5 { font-family: var(--ff-head); font-size: 1.3rem; margin-bottom: .4rem; }
-      .resume-text p { color: var(--muted); font-size: .88rem; margin: 0; }
-      .btn-download {
-        display: inline-flex;
-        align-items: center;
-        gap: .6rem;
-        background: var(--ink);
-        color: #fff !important;
-        font-weight: 600;
-        font-size: .82rem;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-        padding: .85rem 1.8rem;
-        border-radius: 4px;
-        text-decoration: none;
-        transition: background .25s, transform .2s;
-        white-space: nowrap;
-      }
-      .btn-download:hover { background: var(--accent); transform: translateY(-2px); color: #fff !important; text-decoration: none; }
-
-      /* ── Contact ── */
-      #contact { background: var(--ink); color: #fff; }
-      #contact .section-title { color: #fff; }
-      #contact .section-title-wrap .underline { background: var(--accent2); }
-      .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
-      .contact-item {
-        display: flex;
-        gap: 1rem;
-        align-items: flex-start;
-      }
-      .contact-icon {
-        width: 42px; height: 42px;
-        border-radius: 8px;
-        background: rgba(255,255,255,.08);
-        border: 1px solid rgba(255,255,255,.12);
-        display: flex; align-items: center; justify-content: center;
-        flex-shrink: 0;
-        color: var(--accent2);
-        font-size: 1rem;
-      }
-      .contact-label {
-        font-size: .7rem;
-        font-weight: 600;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-        color: rgba(255,255,255,.45);
-        margin-bottom: .2rem;
-      }
-      .contact-value { font-size: .9rem; color: rgba(255,255,255,.85); }
-      .contact-value a { color: var(--accent2); text-decoration: none; }
-      .contact-value a:hover { text-decoration: underline; }
-
-      /* ── Footer ── */
-      .footer-strip {
-        background: #060606;
-        text-align: center;
-        padding: 1.2rem;
-        font-size: .75rem;
-        color: rgba(255,255,255,.25);
-        letter-spacing: .06em;
-      }
-
-      /* ── Responsive ── */
-      @media (max-width: 768px) {
-        .section { padding: 60px 0; }
-        .resume-card { flex-direction: column; text-align: center; }
+      @media(max-width:860px){
+        .navbar{padding:1rem 1.5rem;}
+        .nav-links{
+          display:none;flex-direction:column;position:fixed;inset:0;
+          background:var(--bg);align-items:center;justify-content:center;
+          gap:2rem;z-index:99;
+        }
+        .nav-links.open{display:flex;}
+        .mob-btn{display:block;z-index:101;}
+        .about-2col{grid-template-columns:1fr;}
+        .tl-item{grid-template-columns:1fr;gap:0;}
+        .tl-l{text-align:left;margin-bottom:.4rem;}
+        .tl-item::after{display:none;}
+        .res-band{flex-direction:column;text-align:center;padding:2rem;}
+        .section{padding:68px 0;}
       }
     </style>
   </head>
   <body id="top">
 
-    <!-- ── Navbar ── -->
-    <header>
-      <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar bar1"></span>
-            <span class="navbar-toggler-bar bar2"></span>
-            <span class="navbar-toggler-bar bar3"></span>
+    <!-- NAV -->
+    <div class="profile-page sidebar-collapse">
+      <nav class="navbar navbar-expand-lg fixed-top navbar-transparent bg-primary" color-on-scroll="400">
+        <div class="container" style="justify-content:flex-end;display:flex;width:100%;max-width:1080px;margin:0 auto;padding:0 2rem;">
+          <button class="mob-btn navbar-toggler navbar-toggler" id="mBtn" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="mob-bar navbar-toggler-bar bar1"></span>
+            <span class="mob-bar navbar-toggler-bar bar2"></span>
+            <span class="mob-bar navbar-toggler-bar bar3"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <ul class="navbar-nav">
+            <ul class="nav-links navbar-nav" id="navLinks">
               <li class="nav-item"><a class="nav-link smooth-scroll" href="#about">About</a></li>
               <li class="nav-item"><a class="nav-link smooth-scroll" href="#skill">Skills</a></li>
               <li class="nav-item"><a class="nav-link smooth-scroll" href="#portfolio">Projects</a></li>
@@ -447,295 +275,267 @@
           </div>
         </div>
       </nav>
-    </header>
+    </div>
 
-    <!-- ── Hero ── -->
-    <div class="page-header page-header-small" filter-color="green">
-      <div class="page-header-image" data-parallax="true" style="background-image: url('images/cc-bg-1.jpg')"></div>
+    <!-- HERO -->
+    <div class="hero page-header page-header-small" filter-color="green">
+      <div class="hero-bg page-header-image" data-parallax="true" style="background-image:url('images/cc-bg-1.jpg')"></div>
+      <div class="hero-veil"></div>
+      <div class="hero-deco"></div>
       <div class="container">
-        <div class="content-center">
-          <div class="cc-profile-image">
-            <a href="#"><img src="Adharsh Raj M R.jpg" alt="Adharsh Raj M R"/></a>
-          </div>
-          <div class="hero-badge">Full Stack Java Developer</div>
-          <div class="hero-name">Adharsh Raj M R</div>
-          <p class="hero-sub">Portfolio of Adharsh Raj M R, Certified Full Stack Java Developer</p>
-          <a class="btn-hire smooth-scroll" href="#contact" data-aos="zoom-in">Hire Me</a>
+        <div class="hero-cnt content-center">
+          <div class="cc-profile-image"><a href="#"><img src="Adharsh Raj M R.jpg" alt="Image"/></a></div>
+          <p class="hero-badge">Certified Full Stack Java Developer</p>
+          <div class="h2 title">Adharsh Raj M R</div>
+          <p class="category text-white">Portfolio of Adharsh Raj M R, Certified Full Stack Java Developer</p>
+          <a class="btn btn-primary smooth-scroll mr-2" href="#contact" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Hire Me</a>
         </div>
       </div>
     </div>
 
-    <!-- ── About ── -->
+    <!-- ABOUT -->
     <div class="section" id="about">
-      <div class="container">
-        <div class="section-title-wrap" data-aos="fade-up">
-          <div class="section-title">About Me</div>
-          <div class="underline"></div>
+      <div class="wrap container">
+        <div class="sec-head" data-aos="fade-up">
+          <p class="sec-eye">Introduction</p>
+          <h2 class="sec-title">About Me</h2>
+          <div class="sec-rule"></div>
         </div>
-        <div class="card" data-aos="fade-up" data-aos-offset="10">
-          <div class="row">
-            <div class="col-lg-6 col-md-12">
-              <div class="card-body">
-                <div class="h4 mt-0 title" style="font-family:var(--ff-head)">About</div>
-                <p style="color:var(--muted)">B.Tech graduate in Electronics and Communication Engineering with professional experience as a Technical Business Analysis Engineer, specializing in testing, SQL, and data analysis. Developed a strong interest in backend development while working closely with software systems, leading to hands-on experience in Java, Spring Boot, and REST APIs through real-world projects. Actively upskilling to transition into a software engineering role with a focus on building scalable and efficient backend systems.</p>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-12">
-              <div class="card-body">
-                <div class="h4 mt-0 title" style="font-family:var(--ff-head)">Basic Information</div>
-                <div class="info-row">
-                  <span class="info-label">Age</span>
-                  <span class="info-value" id="age"></span>
-                </div>
-                <div class="info-row">
-                  <span class="info-label">Email</span>
-                  <span class="info-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5f3e3b373e2d2c372d3e356c6a1f38323e3633713c3032">adharshraj35@gmail.com</a></span>
-                </div>
-                <div class="info-row">
-                  <span class="info-label">Phone</span>
-                  <span class="info-value">+919847423247</span>
-                </div>
-                <div class="info-row">
-                  <span class="info-label">WhatsApp</span>
-                  <span class="info-value"><a href="https://wa.me/919847423247">+919847423247</a></span>
-                </div>
-                <div class="info-row">
-                  <span class="info-label">Address</span>
-                  <span class="info-value">Mullassery House, Elthuruth, Kdoungallur P O</span>
-                </div>
-                <div class="info-row">
-                  <span class="info-label">Language</span>
-                  <span class="info-value">English, Malayalam, Hindi</span>
-                </div>
-              </div>
-            </div>
+        <div class="about-2col card" data-aos="fade-up" data-aos-offset="10">
+          <div class="glass about-text">
+            <div class="card-lbl"><span class="dot"></span><span class="h4 mt-0 title" style="font-size:1.35rem;">About</span></div>
+            <p class="about-p">B.Tech graduate in Electronics and Communication Engineering with professional experience as a Technical Business Analysis Engineer, specializing in testing, SQL, and data analysis. Developed a strong interest in backend development while working closely with software systems, leading to hands-on experience in Java, Spring Boot, and REST APIs through real-world projects. Actively upskilling to transition into a software engineering role with a focus on building scalable and efficient backend systems.</p>
+          </div>
+          <div class="glass">
+            <div class="card-lbl"><span class="dot"></span><span class="h4 mt-0 title" style="font-size:1.35rem;">Basic Information</span></div>
+            <div class="irow"><span class="ikey">Age</span><span class="ival" id="age"></span></div>
+            <div class="irow"><span class="ikey">Email</span><span class="ival"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5f3e3b373e2d2c372d3e356c6a1f38323e3633713c3032">[email&#160;protected]</a></span></div>
+            <div class="irow"><span class="ikey">Phone</span><span class="ival">+919847423247</span></div>
+            <div class="irow"><span class="ikey">WhatsApp</span><span class="ival"><a href="https://wa.me/919847423247">+919847423247</a></span></div>
+            <div class="irow"><span class="ikey">Address</span><span class="ival">Mullassery House, Elthuruth, Kdoungallur P O</span></div>
+            <div class="irow"><span class="ikey">Language</span><span class="ival">English, Malayalam , Hindi</span></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ── Skills ── -->
-    <div class="section" id="skill">
-      <div class="container">
-        <div class="section-title-wrap" data-aos="fade-up">
-          <div class="section-title">Professional Skills</div>
-          <div class="underline"></div>
+    <!-- SKILLS -->
+    <div class="section sec-alt" id="skill">
+      <div class="wrap container">
+        <div class="sec-head" data-aos="fade-up">
+          <p class="sec-eye">Expertise</p>
+          <h2 class="h4 text-center mb-4 title sec-title">Professional Skills</h2>
+          <div class="sec-rule"></div>
         </div>
-        <div class="skill-grid" data-aos="fade-up">
-          <!-- Each skill item -->
-          <div class="skill-item">
-            <div class="skill-name">HTML <span class="skill-pct">65%</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-pct="65"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">CSS <span class="skill-pct">60%</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-pct="60"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">JavaScript <span class="skill-pct">60%</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-pct="60"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">Java <span class="skill-pct">90%</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-pct="90"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">Spring Boot <span class="skill-pct">85%</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-pct="85"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">SQL <span class="skill-pct">90%</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-pct="90"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">Python <span class="skill-pct">70%</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-pct="70"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">React JS <span class="skill-pct">60%</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-pct="60"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">Git <span class="skill-pct">60%</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-pct="60"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">Manual Testing <span class="skill-pct">90%</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-pct="90"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">JUnit <span class="skill-pct">60%</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-pct="60"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">MongoDB <span class="skill-pct">60%</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-pct="60"></div></div>
-          </div>
+        <div class="skills-g card" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+          <div class="sk"><div class="sk-top"><span class="sk-name">HTML</span><span class="sk-pct">65%</span></div><div class="sk-track"><div class="sk-fill" data-pct="65"></div></div></div>
+          <div class="sk"><div class="sk-top"><span class="sk-name">CSS</span><span class="sk-pct">60%</span></div><div class="sk-track"><div class="sk-fill" data-pct="60"></div></div></div>
+          <div class="sk"><div class="sk-top"><span class="sk-name">JavaScript</span><span class="sk-pct">60%</span></div><div class="sk-track"><div class="sk-fill" data-pct="60"></div></div></div>
+          <div class="sk"><div class="sk-top"><span class="sk-name">Java</span><span class="sk-pct">90%</span></div><div class="sk-track"><div class="sk-fill" data-pct="90"></div></div></div>
+          <div class="sk"><div class="sk-top"><span class="sk-name">Spring Boot</span><span class="sk-pct">85%</span></div><div class="sk-track"><div class="sk-fill" data-pct="85"></div></div></div>
+          <div class="sk"><div class="sk-top"><span class="sk-name">SQL</span><span class="sk-pct">90%</span></div><div class="sk-track"><div class="sk-fill" data-pct="90"></div></div></div>
+          <div class="sk"><div class="sk-top"><span class="sk-name">Python</span><span class="sk-pct">70%</span></div><div class="sk-track"><div class="sk-fill" data-pct="70"></div></div></div>
+          <div class="sk"><div class="sk-top"><span class="sk-name">React J S</span><span class="sk-pct">60%</span></div><div class="sk-track"><div class="sk-fill" data-pct="60"></div></div></div>
+          <div class="sk"><div class="sk-top"><span class="sk-name">Git</span><span class="sk-pct">60%</span></div><div class="sk-track"><div class="sk-fill" data-pct="60"></div></div></div>
+          <div class="sk"><div class="sk-top"><span class="sk-name">Manual Testing</span><span class="sk-pct">90%</span></div><div class="sk-track"><div class="sk-fill" data-pct="90"></div></div></div>
+          <div class="sk"><div class="sk-top"><span class="sk-name">JUnit</span><span class="sk-pct">60%</span></div><div class="sk-track"><div class="sk-fill" data-pct="60"></div></div></div>
+          <div class="sk"><div class="sk-top"><span class="sk-name">Mongo DB</span><span class="sk-pct">60%</span></div><div class="sk-track"><div class="sk-fill" data-pct="60"></div></div></div>
         </div>
       </div>
     </div>
 
-    <!-- ── Projects ── -->
+    <!-- PROJECTS -->
     <div class="section" id="portfolio">
-      <div class="container">
-        <div class="section-title-wrap" data-aos="fade-up">
-          <div class="section-title">Projects</div>
-          <div class="underline"></div>
+      <div class="wrap container">
+        <div class="sec-head" data-aos="fade-up">
+          <p class="sec-eye">Work</p>
+          <h2 class="h4 text-center mb-4 title sec-title">Projects</h2>
+          <div class="sec-rule"></div>
         </div>
-        <div class="projects-grid">
-          <a class="project-card" href="https://github.com/Adharshraj/XMeme" data-aos="fade-up">
-            <img class="project-img" src="images/project-1.jpg" alt="XMeme"/>
-            <div class="project-body">
-              <div class="project-title">XMeme</div>
-              <p class="project-desc">Developed XMeme, a backend web application that enables users to post and view memes by implementing REST APIs using Spring Boot, integrating MongoDB for efficient data storage and retrieval, and ensuring reliable application performance through testing.</p>
-              <span class="project-link-tag"><i class="fa fa-github"></i> View on GitHub</span>
-            </div>
-          </a>
-          <a class="project-card" href="https://github.com/Adharshraj/QEats" data-aos="fade-up" data-aos-delay="80">
-            <img class="project-img" src="images/project-2.jpg" alt="QEats"/>
-            <div class="project-body">
-              <div class="project-title">QEats</div>
-              <p class="project-desc">Built backend components of QEats, a Spring Boot-based food ordering application, by implementing multiple REST API endpoints to retrieve restaurant information and process user orders, with a focus on scalable and efficient data handling.</p>
-              <span class="project-link-tag"><i class="fa fa-github"></i> View on GitHub</span>
-            </div>
-          </a>
-          <a class="project-card" href="https://github.com/Adharshraj/QMoney" data-aos="fade-up" data-aos-delay="160">
-            <img class="project-img" src="images/project-3.jpg" alt="QMoney"/>
-            <div class="project-body">
-              <div class="project-title">QMoney</div>
-              <p class="project-desc">Developed QMoney, a stock portfolio analyzer, by implementing core portfolio management logic as a reusable library, refactoring the codebase to support multiple stock quote services, and improving application performance and stability.</p>
-              <span class="project-link-tag"><i class="fa fa-github"></i> View on GitHub</span>
-            </div>
-          </a>
-          <a class="project-card" href="https://github.com/Adharshraj/Xlido" data-aos="fade-up" data-aos-delay="240">
-            <img class="project-img" src="images/project-4.jpg" alt="Xlido"/>
-            <div class="project-body">
-              <div class="project-title">Xlido</div>
-              <p class="project-desc">Developed Xlido, an audience engagement application that enables real-time interaction during events and meetings by implementing core features such as Q&amp;A functionality to facilitate seamless communication and enhance user participation.</p>
-              <span class="project-link-tag"><i class="fa fa-github"></i> View on GitHub</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── Experience ── -->
-    <div class="section" id="experience" style="background:#f0ede6;">
-      <div class="container">
-        <div class="section-title-wrap" data-aos="fade-up">
-          <div class="section-title">Experience</div>
-          <div class="underline"></div>
-        </div>
-        <div class="timeline" data-aos="fade-up">
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-period">September 2024 – Present</div>
-            <div class="timeline-org">Conduent Business Services India LLP</div>
-            <div class="timeline-role">Technical Business Analysis Engineer I</div>
-            <p class="timeline-desc">As a Technical Business Analysis Engineer I, I specialize in application testing, including unit testing, regression testing, and XML testing, to ensure robust and reliable systems. My role involves analyzing business requirement documents to identify key objectives and translating them into comprehensive test plans. Additionally, I leverage my expertise in PL/SQL to write complex queries and perform backend updates.</p>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-period">April 2024 – July 2024</div>
-            <div class="timeline-org">Macrosive Computer Solutions</div>
-            <div class="timeline-role">Internship in Microsoft Dynamics 365 Development</div>
-            <p class="timeline-desc">Intern at Macrosive, where I worked with the software development team and gained hands-on experience with Microsoft Dynamics and related technologies including Power Apps, Power Automate, and Power Pages. Tested various products to ensure quality and performance. Developed a Work-from-Home Request page using Power Apps as part of an internal project, enhancing the efficiency of remote work requests.</p>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-period">July 2023 – February 2024</div>
-            <div class="timeline-org">KodNest</div>
-            <div class="timeline-role">Full-Stack Developer Intern</div>
-            <p class="timeline-desc">Intern at KodNest, where I acquired practical skills in Java, MySQL, Frontend Technology, Manual Testing, contributing to real-world projects and learning directly from industry professionals.</p>
+        <div class="proj-g tab-content gallery mt-5">
+          <div class="tab-pane active" id="web-development" style="display:contents;">
+            <a class="proj-card cc-porfolio-image img-raised" href="https://github.com/Adharshraj/XMeme" data-aos="fade-up">
+              <img class="proj-img" src="images/project-1.jpg" alt="Image"/>
+              <div class="proj-body">
+                <div class="proj-title h4">XMeme</div>
+                <p class="proj-desc">Developed XMeme, a backend web application that enables users to post and view memes by implementing REST APIs using Spring Boot, integrating MongoDB for efficient data storage and retrieval, and ensuring reliable application performance through testing</p>
+                <span class="proj-lnk"><i class="fa fa-github"></i> View on GitHub</span>
+              </div>
+            </a>
+            <a class="proj-card cc-porfolio-image img-raised" href="https://github.com/Adharshraj/QEats" data-aos="fade-up" data-aos-delay="80">
+              <img class="proj-img" src="images/project-2.jpg" alt="Image"/>
+              <div class="proj-body">
+                <div class="proj-title h4">QEats</div>
+                <p class="proj-desc">Built backend components of QEats, a Spring Boot-based food ordering application, by implementing multiple REST API endpoints to retrieve restaurant information and process user orders, with a focus on scalable and efficient data handling.</p>
+                <span class="proj-lnk"><i class="fa fa-github"></i> View on GitHub</span>
+              </div>
+            </a>
+            <a class="proj-card cc-porfolio-image img-raised" href="https://github.com/Adharshraj/QMoney" data-aos="fade-up" data-aos-delay="160">
+              <img class="proj-img" src="images/project-3.jpg" alt="Image"/>
+              <div class="proj-body">
+                <div class="proj-title h4">QMoney</div>
+                <p class="proj-desc">Developed QMoney, a stock portfolio analyzer, by implementing core portfolio management logic as a reusable library, refactoring the codebase to support multiple stock quote services, and improving application performance and stability.</p>
+                <span class="proj-lnk"><i class="fa fa-github"></i> View on GitHub</span>
+              </div>
+            </a>
+            <a class="proj-card cc-porfolio-image img-raised" href="https://github.com/Adharshraj/Xlido" data-aos="fade-up" data-aos-delay="240">
+              <img class="proj-img" src="images/project-4.jpg" alt="Image"/>
+              <div class="proj-body">
+                <div class="proj-title h4">Xlido</div>
+                <p class="proj-desc">Developed Xlido, an audience engagement application that enables real-time interaction during events and meetings by implementing core features such as Q&amp;A functionality to facilitate seamless communication and enhance user participation.</p>
+                <span class="proj-lnk"><i class="fa fa-github"></i> View on GitHub</span>
+              </div>
+            </a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ── Education ── -->
+    <!-- EXPERIENCE -->
+    <div class="section sec-alt" id="experience">
+      <div class="wrap container cc-experience">
+        <div class="sec-head" data-aos="fade-up">
+          <p class="sec-eye">Career</p>
+          <h2 class="h4 text-center mb-4 title sec-title">Experiance</h2>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="tl" data-aos="fade-up">
+          <div class="tl-item card">
+            <div class="tl-l col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+              <p class="tl-period">September 2024 - Present</p>
+              <p class="tl-org h5">Conduent Business Services India LLP</p>
+            </div>
+            <div class="tl-r col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+              <div class="tl-dot"></div>
+              <div class="tl-role h5">Technical Business Analysis Engineer I</div>
+              <p class="tl-desc">As a Technical Business Analysis Engineer I, I specialize in application testing, including unit testing, regression testing, and XML testing, to ensure robust and reliable systems. My role involves analyzing business requirement documents to identify key objectives and translating them into comprehensive test plans. Additionally, I leverage my expertise in PL/SQL to write complex queries and perform backend updates</p>
+            </div>
+          </div>
+          <div class="tl-item card">
+            <div class="tl-l col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+              <p class="tl-period">July 2023 - February 2024</p>
+              <p class="tl-org h5">KodNest</p>
+            </div>
+            <div class="tl-r col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+              <div class="tl-dot"></div>
+              <div class="tl-role h5">Full-Stack Developer intern</div>
+              <p class="tl-desc">Intern at KodNest, where I acquired practical skills in Java, MySQL, Frontend Technology, Manual Testing, contributing to real world projects and learning directly from industry professionals</p>
+            </div>
+          </div>
+          <div class="tl-item card">
+            <div class="tl-l col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+              <p class="tl-period">April 2024 - July 2024</p>
+              <p class="tl-org h5">Macrosive Computer Solutions</p>
+            </div>
+            <div class="tl-r col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+              <div class="tl-dot"></div>
+              <div class="tl-role h5">Internship in Microsoft Dynamics 365 Development</div>
+              <p class="tl-desc">Intern at Macrosive, where I worked with software development team and Gained hands-on experience with Microsoft Dynamics and related technologies including Power Apps, Power Automate, and Power Pages etc. Tested various products to ensure quality and performance. Developed a Work-from-Home Request page using Power Apps as part of an internal project, enhancing the efficiency of remote work requests</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
     <div class="section">
-      <div class="container cc-education">
-        <div class="section-title-wrap" data-aos="fade-up">
-          <div class="section-title">Education</div>
-          <div class="underline"></div>
+      <div class="wrap container cc-education">
+        <div class="sec-head" data-aos="fade-up">
+          <p class="sec-eye">Background</p>
+          <h2 class="h4 text-center mb-4 title sec-title">Education</h2>
+          <div class="sec-rule"></div>
         </div>
-        <div class="timeline" data-aos="fade-up">
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-period">2019 – 2023</div>
-            <div class="timeline-org">APJ Abdul Kalam Technological University</div>
-            <div class="timeline-role">Bachelor of Technology (B.Tech) in Electronics and Communication Engineering</div>
+        <div class="tl" data-aos="fade-up">
+          <div class="tl-item card">
+            <div class="tl-l col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+              <p class="tl-period">2019 - 2023</p>
+              <p class="tl-org h5">Bachelor's Degree</p>
+            </div>
+            <div class="tl-r col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+              <div class="tl-dot"></div>
+              <div class="tl-role h5">Bachelor of Technology (B.Tech) in Electronics and Communication Engineering</div>
+              <p class="tl-desc category">APJ Adbul kalam Technological University</p>
+            </div>
           </div>
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-period">2016 – 2018</div>
-            <div class="timeline-org">Kerala State Board</div>
-            <div class="timeline-role">Plus Two — Science and Mathematics</div>
+          <div class="tl-item card">
+            <div class="tl-l col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+              <p class="tl-period">2016 - 2018</p>
+              <p class="tl-org h5">Plus Two</p>
+            </div>
+            <div class="tl-r col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+              <div class="tl-dot"></div>
+              <div class="tl-role h5">Science and Mathematics</div>
+              <p class="tl-desc category">Kerala State board</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ── Resume ── -->
-    <div class="section" id="resume">
-      <div class="container">
-        <div class="section-title-wrap" data-aos="fade-up">
-          <div class="section-title">My Resume</div>
-          <div class="underline"></div>
+    <!-- RESUME -->
+    <div class="section sec-alt" id="resume">
+      <div class="wrap container">
+        <div class="sec-head" data-aos="fade-up">
+          <p class="sec-eye">Download</p>
+          <h2 class="h4 text-center mb-4 title sec-title">My Resume</h2>
+          <div class="sec-rule"></div>
         </div>
-        <div class="resume-card" data-aos="fade-up">
-          <div class="resume-text">
-            <h5>Adharsh Raj M R — Resume</h5>
-            <p>Download my comprehensive resume to view my complete professional background, technical skills, project experience, and educational qualifications.</p>
+        <div class="res-band card" data-aos="fade-up" data-aos-offset="10">
+          <div class="res-text">
+            <h5>Adharsh Raj M R - Resume</h5>
+            <p class="text-muted">Download my comprehensive resume to view my complete professional background, technical skills, project experience, and educational qualifications.</p>
           </div>
-          <a href="Adharsh Raj M R Resume.pdf" download="Adharsh_Raj_MR_Resume.pdf" class="btn-download">
-            <i class="fa fa-download"></i> Download PDF
+          <a href="Adharsh Raj M R Resume.pdf" download="Adharsh_Raj_MR_Resume.pdf" class="btn-dl btn btn-primary btn-lg">
+            <i class="fa fa-download mr-2"></i>Download PDF
           </a>
         </div>
       </div>
     </div>
 
-    <!-- ── Contact ── -->
+    <!-- CONTACT -->
     <div class="section" id="contact">
-      <div class="container">
-        <div class="section-title-wrap" data-aos="fade-up">
-          <div class="section-title">Contact Me</div>
-          <div class="underline"></div>
-        </div>
-        <div class="contact-grid" data-aos="fade-up">
-          <div class="contact-item">
-            <div class="contact-icon"><i class="fa fa-map-marker"></i></div>
-            <div>
-              <div class="contact-label">Address</div>
-              <div class="contact-value">Mullassery House, Elthuruth, Kodungallur P O, Thrissur, Pin: 680664</div>
-            </div>
+      <div class="cc-contact-information" style="background-image:url('images/staticmap.png')">
+        <div class="wrap container cc-contact">
+          <div class="sec-head" data-aos="fade-up">
+            <p class="sec-eye">Get in Touch</p>
+            <h2 class="h4 text-center title sec-title">Contact Me</h2>
+            <div class="sec-rule"></div>
           </div>
-          <div class="contact-item">
-            <div class="contact-icon"><i class="fa fa-phone"></i></div>
-            <div>
-              <div class="contact-label">Phone</div>
-              <div class="contact-value">+919847423247</div>
+          <div class="contact-g card mb-0" data-aos="zoom-in">
+            <div class="cc">
+              <div class="cc-icon"><i class="fa fa-map-marker"></i></div>
+              <div>
+                <div class="cc-lbl">Address</div>
+                <div class="cc-val">Mullassery House, Elthuruth, Kodungallur P O, Thrissur , Pin : 680664</div>
+              </div>
             </div>
-          </div>
-          <div class="contact-item">
-            <div class="contact-icon"><i class="fa fa-envelope"></i></div>
-            <div>
-              <div class="contact-label">Email</div>
-              <div class="contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99f8fdf1f8ebeaf1ebf8f3aaacd9fef4f8f0f5b7faf6f4">[email&#160;protected]</a></div>
+            <div class="cc">
+              <div class="cc-icon"><i class="fa fa-phone"></i></div>
+              <div>
+                <div class="cc-lbl">Phone</div>
+                <div class="cc-val">+919847423247</div>
+              </div>
             </div>
-          </div>
-          <div class="contact-item">
-            <div class="contact-icon"><i class="fa fa-whatsapp"></i></div>
-            <div>
-              <div class="contact-label">WhatsApp</div>
-              <div class="contact-value"><a href="https://wa.me/919847423247">+919847423247</a></div>
+            <div class="cc">
+              <div class="cc-icon"><i class="fa fa-envelope"></i></div>
+              <div>
+                <div class="cc-lbl">Email</div>
+                <div class="cc-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99f8fdf1f8ebeaf1ebf8f3aaacd9fef4f8f0f5b7faf6f4">[email&#160;protected]</a></div>
+              </div>
+            </div>
+            <div class="cc">
+              <div class="cc-icon"><i class="fa fa-whatsapp"></i></div>
+              <div>
+                <div class="cc-lbl">WhatsApp</div>
+                <div class="cc-val"><a href="https://wa.me/919847423247">+919847423247</a></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="footer-strip">© 2025 Adharsh Raj M R · All rights reserved</div>
+    <footer class="ft">© 2025 Adharsh Raj M R &nbsp;&middot;&nbsp; All rights reserved</footer>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="js/core/jquery.3.2.1.min.js?ver=1.1.0"></script>
@@ -746,33 +546,39 @@
     <script src="scripts/main.js?ver=1.1.0"></script>
 
     <script>
-      // ── Age ──
-      function calculateAge() {
-        const birthDate = new Date(2000, 6, 23);
+      // Age
+      (function(){
+        const birthDate = new Date(2000, 6, 23); // July 15, 1999 (Update with your actual birthdate)
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
         const m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
-        return age;
-      }
-      const ageEl = document.getElementById('age');
-      if (ageEl) ageEl.textContent = calculateAge();
+        if(m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+        const el = document.getElementById('age');
+        if(el) el.textContent = age;
+      })();
 
-      // ── AOS ──
-      AOS.init({ duration: 700, once: true, offset: 40 });
+      // AOS
+      AOS.init({duration:800,once:true,offset:50});
 
-      // ── Skill bars animate on scroll ──
-      function animateBars() {
-        document.querySelectorAll('.skill-fill').forEach(bar => {
-          const rect = bar.getBoundingClientRect();
-          if (rect.top < window.innerHeight - 60 && !bar.classList.contains('animated')) {
-            bar.style.width = bar.dataset.pct + '%';
-            bar.classList.add('animated');
+      // Skill bars
+      function runBars(){
+        document.querySelectorAll('.sk-fill:not(.done)').forEach(b=>{
+          if(b.getBoundingClientRect().top < window.innerHeight - 60){
+            b.style.width = b.dataset.pct + '%';
+            b.classList.add('done');
           }
         });
       }
-      window.addEventListener('scroll', animateBars);
-      animateBars();
+      window.addEventListener('scroll', runBars, {passive:true});
+      setTimeout(runBars, 500);
+
+      // Mobile nav
+      const mBtn = document.getElementById('mBtn');
+      const nLinks = document.getElementById('navLinks');
+      if(mBtn && nLinks){
+        mBtn.addEventListener('click', () => nLinks.classList.toggle('open'));
+        nLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nLinks.classList.remove('open')));
+      }
     </script>
   </body>
 </html>

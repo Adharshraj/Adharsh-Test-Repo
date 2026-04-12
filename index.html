@@ -780,22 +780,39 @@
 
     <script>
       // ── Age ──
-      function calculateAge() {
-        const birthDate = new Date(2000, 6, 23);
+     (function(){
+        const birthDate = new Date(2000, 6, 23); // July 15, 1999 (Update with your actual birthdate)
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
         const m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
-        return age;
+        if(m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+        const el = document.getElementById('age');
+        if(el) el.textContent = age;
+      })();
+
+      // AOS
+      AOS.init({duration:800,once:true,offset:50});
+
+      // Skill bars
+      function runBars(){
+        document.querySelectorAll('.sk-fill:not(.done)').forEach(b=>{
+          if(b.getBoundingClientRect().top < window.innerHeight - 60){
+            b.style.width = b.dataset.pct + '%';
+            b.classList.add('done');
+          }
+        });
       }
-      const ageEl = document.getElementById('age');
-      if (ageEl) ageEl.textContent = calculateAge();
+      window.addEventListener('scroll', runBars, {passive:true});
+      setTimeout(runBars, 500);
 
-      // ── AOS ──
-      AOS.init({ duration: 700, once: true, offset: 40 });
+      // Mobile nav
+      const mBtn = document.getElementById('mBtn');
+      const nLinks = document.getElementById('navLinks');
+      if(mBtn && nLinks){
+        mBtn.addEventListener('click', () => nLinks.classList.toggle('open'));
+        nLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nLinks.classList.remove('open')));
+      }
+    </script>
+  </body>
+</html>
 
-      // ── Skill bars animate on scroll ──
-      function animateBars() {
-        document.querySelectorAll('.skill-fill').forEach(bar => {
-          const rect = bar.getBoundingClientRect();
-          if (rect.top < w

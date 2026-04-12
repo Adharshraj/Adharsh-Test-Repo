@@ -491,7 +491,7 @@
                 </div>
                 <div class="info-row">
                   <span class="info-label">Email</span>
-                  <span class="info-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5f3e3b373e2d2c372d3e356c6a1f38323e3633713c3032"><span class="__cf_email__" data-cfemail="a9c8cdc1c8dbdac1dbc8c39a9ce9cec4c8c0c587cac6c4">[email&#160;protected]</span></a></span>
+                  <span class="info-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5f3e3b373e2d2c372d3e356c6a1f38323e3633713c3032"><span class="__cf_email__" data-cfemail="a9c8cdc1c8dbdac1dbc8c39a9ce9cec4c8c0c587cac6c4">adharshraj35@gmail.com</span></a></span>
                 </div>
                 <div class="info-row">
                   <span class="info-label">Phone</span>
@@ -723,7 +723,7 @@
             <div class="contact-icon"><i class="fa fa-envelope"></i></div>
             <div>
               <div class="contact-label">Email</div>
-              <div class="contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99f8fdf1f8ebeaf1ebf8f3aaacd9fef4f8f0f5b7faf6f4"><span class="__cf_email__" data-cfemail="1f7e7b777e6d6c776d7e752c2a5f78727e7673317c7072">[email&#160;protected]</span></a></div>
+              <div class="contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99f8fdf1f8ebeaf1ebf8f3aaacd9fef4f8f0f5b7faf6f4"><span class="__cf_email__" data-cfemail="1f7e7b777e6d6c776d7e752c2a5f78727e7673317c7072">adharshraj35@gmail.com</span></a></div>
             </div>
           </div>
           <div class="contact-item">
@@ -738,6 +738,37 @@
     </div>
 
     <div class="footer-strip">© 2026 Adharsh Raj M R · All rights reserved</div>
+
+    <!-- ── Visitor Tracker ── -->
+    <script>
+      (function () {
+        // ✏️ REPLACE THIS with your deployed Google Apps Script Web App URL
+        var SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+        if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') return;
+
+        var nav = navigator || {};
+        var scr = window.screen || {};
+
+        var data = {
+          timestamp:  new Date().toISOString(),
+          timezone:   Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown',
+          language:   nav.language || 'unknown',
+          platform:   nav.platform || 'unknown',
+          userAgent:  nav.userAgent || 'unknown',
+          referrer:   document.referrer || 'direct',
+          page:       window.location.href,
+          screenW:    scr.width  || 0,
+          screenH:    scr.height || 0,
+        };
+
+        // Fire-and-forget — won't block page load
+        fetch(SCRIPT_URL + '?data=' + encodeURIComponent(JSON.stringify(data)), {
+          method: 'GET',
+          mode:   'no-cors'   // required for cross-origin Apps Script calls
+        }).catch(function () { /* silent fail */ });
+      })();
+    </script>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="js/core/jquery.3.2.1.min.js?ver=1.1.0"></script>

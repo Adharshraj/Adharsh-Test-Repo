@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Adharsh Raj M R</title>
-    <link rel="icon" type="image/png" href="favicon_AMR_2.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_AMR_2.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_AMR_2.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/aos.css?ver=1.1.0" rel="stylesheet">
@@ -380,11 +381,12 @@
       #contact { background: var(--ink); color: #fff; }
       #contact .section-title { color: #fff; }
       #contact .section-title-wrap .underline { background: var(--accent2); }
-      .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
+      .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
       .contact-item {
         display: flex;
         gap: 1rem;
         align-items: flex-start;
+        min-width: 0;
       }
       .contact-icon {
         width: 42px; height: 42px;
@@ -404,7 +406,7 @@
         color: rgba(255,255,255,.45);
         margin-bottom: .2rem;
       }
-      .contact-value { font-size: .9rem; color: rgba(255,255,255,.85); }
+      .contact-value { font-size: .9rem; color: rgba(255,255,255,.85); word-break: break-word; overflow-wrap: break-word; min-width: 0; }
       .contact-value a { color: var(--accent2); text-decoration: none; }
       .contact-value a:hover { text-decoration: underline; }
 
@@ -489,7 +491,7 @@
                 </div>
                 <div class="info-row">
                   <span class="info-label">Email</span>
-                  <span class="info-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5f3e3b373e2d2c372d3e356c6a1f38323e3633713c3032">adharshraj35@gmail.com</a></span>
+                  <span class="info-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5f3e3b373e2d2c372d3e356c6a1f38323e3633713c3032"><span class="__cf_email__" data-cfemail="a9c8cdc1c8dbdac1dbc8c39a9ce9cec4c8c0c587cac6c4">[email&#160;protected]</span></a></span>
                 </div>
                 <div class="info-row">
                   <span class="info-label">Phone</span>
@@ -721,7 +723,7 @@
             <div class="contact-icon"><i class="fa fa-envelope"></i></div>
             <div>
               <div class="contact-label">Email</div>
-              <div class="contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99f8fdf1f8ebeaf1ebf8f3aaacd9fef4f8f0f5b7faf6f4">adharshraj35@gmail.com</a></div>
+              <div class="contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99f8fdf1f8ebeaf1ebf8f3aaacd9fef4f8f0f5b7faf6f4"><span class="__cf_email__" data-cfemail="1f7e7b777e6d6c776d7e752c2a5f78727e7673317c7072">[email&#160;protected]</span></a></div>
             </div>
           </div>
           <div class="contact-item">
@@ -737,7 +739,7 @@
 
     <div class="footer-strip">© 2026 Adharsh Raj M R · All rights reserved</div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="js/core/jquery.3.2.1.min.js?ver=1.1.0"></script>
     <script src="js/core/popper.min.js?ver=1.1.0"></script>
     <script src="js/core/bootstrap.min.js?ver=1.1.0"></script>
@@ -765,14 +767,4 @@
       function animateBars() {
         document.querySelectorAll('.skill-fill').forEach(bar => {
           const rect = bar.getBoundingClientRect();
-          if (rect.top < window.innerHeight - 60 && !bar.classList.contains('animated')) {
-            bar.style.width = bar.dataset.pct + '%';
-            bar.classList.add('animated');
-          }
-        });
-      }
-      window.addEventListener('scroll', animateBars);
-      animateBars();
-    </script>
-  </body>
-</html>
+          if (rect.top < w

@@ -772,28 +772,41 @@
     </script>
 
     <!-- ── Visitor Tracker ── -->
-    <script>
-      (function () {
-        var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNQbOP4HrBQ2KAA-j-MN2HnSDCaW2AXDpKnRpHGpVvgoHfzoeCnEz619jHfsDhRvW-/exec';
+<script>
+  (function () {
+    var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNQbOP4HrBQ2KAA-j-MN2HnSDCaW2AXDpKnRpHGpVvgoHfzoeCnEz619jHfsDhRvW-/exec';
 
-        var data = {
-          timestamp : new Date().toISOString(),
-          timezone  : Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown',
-          language  : navigator.language || 'unknown',
-          platform  : navigator.platform || 'unknown',
-          userAgent : navigator.userAgent || 'unknown',
-          referrer  : document.referrer || 'direct',
-          page      : window.location.href,
-          screenW   : screen.width  || 0,
-          screenH   : screen.height || 0
-        };
+    // Fetch IP + geo info first, then log everything together
+    fetch('https://ipapi.co/json/')
+      .then(function (r) { return r.json(); })
+      .then(function (geo) { sendLog(geo); })
+      .catch(function ()  { sendLog(null); }); // still log even if IP lookup fails
 
-        fetch(SCRIPT_URL + '?data=' + encodeURIComponent(JSON.stringify(data)), {
-          method : 'GET',
-          mode   : 'no-cors'
-        }).catch(function () {});
-      })();
-    </script>
+    function sendLog(geo) {
+      var data = {
+        timestamp : new Date().toISOString(),
+        ip        : geo ? (geo.ip        || '')  : 'unknown',
+        city      : geo ? (geo.city       || '')  : '',
+        region    : geo ? (geo.region     || '')  : '',
+        country   : geo ? (geo.country_name || '') : '',
+        isp       : geo ? (geo.org         || '')  : '',
+        timezone  : geo ? (geo.timezone    || '')  : Intl.DateTimeFormat().resolvedOptions().timeZone,
+        language  : navigator.language  || 'unknown',
+        platform  : navigator.platform  || 'unknown',
+        userAgent : navigator.userAgent || 'unknown',
+        referrer  : document.referrer   || 'direct',
+        page      : window.location.href,
+        screenW   : screen.width  || 0,
+        screenH   : screen.height || 0
+      };
+
+      fetch(SCRIPT_URL + '?data=' + encodeURIComponent(JSON.stringify(data)), {
+        method : 'GET',
+        mode   : 'no-cors'
+      }).catch(function () {});
+    }
+  })();
+</script>
 
   </body>
 </html>

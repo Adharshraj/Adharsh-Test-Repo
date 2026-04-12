@@ -643,6 +643,48 @@
         el.textContent  = msg;
         el.className    = 'msg-status ' + type;
       }
+      function sendMessage() {
+    var name    = document.getElementById('msg-name').value.trim();
+    var email   = document.getElementById('msg-email').value.trim();
+    var message = document.getElementById('msg-text').value.trim();
+    var status  = document.getElementById('msg-status');
+
+    // 1. Name Validation
+    if (!name) { 
+        showStatus('Please enter your name.', 'error'); 
+        return; 
+    }
+
+    // 2. Email Validation
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) { 
+        showStatus('Please enter a valid email.', 'error'); 
+        return; 
+    }
+
+    // 3. Message Validation
+    if (!message) {
+        showStatus('Please write a message.', 'error');
+        return;
+    }
+
+    // Regex explanation:
+    // ^[ ... ]* means the whole string must match the characters inside the brackets
+    // a-zA-Z0-9 is alphanumeric
+    // \s\n allows spaces and new lines
+    // @&%\/\(\)\{\}\[\] are your specific allowed symbols (some escaped with backslashes)
+    var allowedPattern = /^[a-zA-Z0-9\s\n@&%\/\(\)\{\}\[\]]*$/;
+
+    if (!allowedPattern.test(message)) {
+        alert("Invalid characters detected! Only these special characters are allowed: @, &, %, /, (, ), {, }, [, ]");
+        showStatus('Validation failed: Restricted characters used.', 'error');
+        return;
+    }
+
+    // If validation passes, your submission code (fetch/image beacon) goes here...
+    console.log("Success! Form is valid.");
+}
+}
     </script>
 
   </body>

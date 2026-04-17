@@ -208,6 +208,21 @@
       .msg-status.success { color: #6fcf97; }
       .msg-status.error   { color: #eb5757; }
 
+      /* ── Typewriter ── */
+      .typewriter-cursor {
+        display: inline-block;
+        width: 3px;
+        background: currentColor;
+        margin-left: 3px;
+        animation: blink .75s step-end infinite;
+        vertical-align: baseline;
+        border-radius: 1px;
+      }
+      .hero-name .typewriter-cursor    { height: .85em; }
+      .hero-badge .typewriter-cursor   { height: .75em; }
+      .hero-sub .typewriter-cursor     { height: .7em;  }
+      @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
       /* ── Footer ── */
       .footer-strip { background: #060606; text-align: center; padding: 1.2rem; font-size: .75rem; color: rgba(255,255,255,.25); letter-spacing: .06em; }
 
@@ -252,10 +267,10 @@
           <div class="cc-profile-image">
             <a href="#"><img src="Adharsh Raj M R.jpg" alt="Adharsh Raj M R"/></a>
           </div>
-          <div class="hero-badge">Full Stack Java Developer</div>
-          <div class="hero-name">Adharsh Raj M R</div>
-          <p class="hero-sub">Portfolio of Adharsh Raj M R, Certified Full Stack Java Developer</p>
-          <a class="btn-hire smooth-scroll" href="#contact" data-aos="zoom-in">Hire Me</a>
+          <div class="hero-badge" id="tw-badge">&nbsp;</div>
+          <div class="hero-name" id="tw-name">&nbsp;</div>
+          <p class="hero-sub" id="tw-sub">&nbsp;</p>
+          <a class="btn-hire smooth-scroll" href="#contact" id="tw-btn" style="opacity:0;transition:opacity .5s">Hire Me</a>
         </div>
       </div>
     </div>
@@ -446,7 +461,7 @@
             <h5>Adharsh Raj M R — Resume</h5>
             <p>Download my comprehensive resume to view my complete professional background, technical skills, project experience, and educational qualifications.</p>
           </div>
-          <a href="Adharsh Raj M R Resume2.pdf" download="Adharsh_Raj_MR_Resume.pdf" class="btn-download">
+          <a href="Adharsh Raj M R Resume.pdf" download="Adharsh_Raj_MR_Resume.pdf" class="btn-download">
             <i class="fa fa-download"></i> Download PDF
           </a>
         </div>
@@ -530,7 +545,7 @@
     <script src="scripts/main.js?ver=1.1.0"></script>
 
     <script>
-      var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzLVbiGCGfHev98rgGXQxDHXfe07iQydS5nWl7gKD6obODXJn_mjDUgJacEBx1Bwjhu/exec';
+      var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXvqOPvQc1JeUrSY3K6mmZ_ca8v5pDq_IAX-UgwQH57af3Xvytv4e2ljHK5cjMPFHHng/exec';
 
       // ── Age ──
       (function () {
@@ -609,8 +624,8 @@
 
         if (!name)    { showStatus('Please enter your name.', 'error'); return; }
         if (!email || !/\S+@\S+\.\S+/.test(email)) { showStatus('Please enter a valid email.', 'error'); return; }
-        var allowedPattern = /^[a-zA-Z0-9\s\n@&%\/\(\)\{\}\[\]]*$/;
-        if (!message || !allowedPattern.test(message)) { showStatus('Please write a message. or Invalid characters detected! Only these special characters are allowed: @, &, %, /, (, ), {, }, [, ]', 'error'); return; }
+        var allowedPattern = /^[a-zA-Z0-9\s\n@&%\/\(\)\{\}\[\]\$]*$/;
+        if (!message || !allowedPattern.test(message)) { showStatus('Please write a message. or Invalid characters detected! Only these special characters are allowed: @, &, %, &, /, (, ), {, }, [, ]', 'error'); return; }
 
         btn.disabled = true;
         btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Sending...';
@@ -644,6 +659,43 @@
         el.textContent  = msg;
         el.className    = 'msg-status ' + type;
       }
+      // ── Typewriter ──
+      (function () {
+        function typeInto(el, text, speed, onDone) {
+          el.textContent = '';
+          var cursor = document.createElement('span');
+          cursor.className = 'typewriter-cursor';
+          el.appendChild(cursor);
+          var i = 0;
+          var interval = setInterval(function () {
+            if (i < text.length) {
+              el.insertBefore(document.createTextNode(text[i]), cursor);
+              i++;
+            } else {
+              clearInterval(interval);
+              cursor.remove();
+              if (onDone) setTimeout(onDone, 180);
+            }
+          }, speed);
+        }
+
+        window.addEventListener('load', function () {
+          var badge = document.getElementById('tw-badge');
+          var name  = document.getElementById('tw-name');
+          var sub   = document.getElementById('tw-sub');
+          var btn   = document.getElementById('tw-btn');
+
+          setTimeout(function () {
+            typeInto(badge, 'Full Stack Java Developer', 55, function () {
+              typeInto(name, 'Adharsh Raj M R', 75, function () {
+                typeInto(sub, 'Portfolio of Adharsh Raj M R, Certified Full Stack Java Developer', 28, function () {
+                  btn.style.opacity = '1';
+                });
+              });
+            });
+          }, 400);
+        });
+      })();
     </script>
 
   </body>

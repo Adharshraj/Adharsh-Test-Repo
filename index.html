@@ -606,8 +606,7 @@
 
         if (!name)    { showStatus('Please enter your name.', 'error'); return; }
         if (!email || !/\S+@\S+\.\S+/.test(email)) { showStatus('Please enter a valid email.', 'error'); return; }
-        var allowedPattern = /^[a-zA-Z0-9\s\n@&%\/\(\)\{\}\[\]\$,]*$/;
-        var allowedPattern = /^[a-zA-Z0-9\s\n@&%\/\(\)\{\}\[\]\$,\.\-_!?:;'"]*$/;
+        var allowedPattern = /^[a-zA-Z0-9\s\n@&%\/\(\)\{\}\[\]\$,\.\-_!?:;'"*+]*$/;
         var urlPattern = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])|(\b[-A-Z0-9]+(\.[A-Z]{2,})+\b)/gi;
 
         if (!message) {

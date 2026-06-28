@@ -531,9 +531,9 @@
 
       // ── Age ──
       (function () {
-        var birthDate = new Date(2000, 5, 29);
+        var birthDate = new Date(2000, 5, 23);
         var today = new Date();
-        var age = today.getYear() - birthDate.getYear();
+        var age = today.getFullYear() - birthDate.getFullYear();
         var m = today.getMonth() - birthDate.getMonth();
         if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
         var el = document.getElementById('age');

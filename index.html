@@ -531,11 +531,11 @@
 
       // ── Age ──
       (function () {
-        var birthDate = new Date(2000, 6, 29);
+        var birthDate = new Date(2000, 6, 28);
         var today = new Date();
-        var age = today.getFullYear() - birthDate.getFullYear();
+        var age = today.getYear() - birthDate.getYear();
         var m = today.getMonth() - birthDate.getMonth();
-        if (m > 0 || (m === 0 && today.getDate() > birthDate.getDate())) age++;
+        if (m > 0 || (m === 0 && today.getDate() >= birthDate.getDate())) age++;
         var el = document.getElementById('age');
         if (el) el.textContent = age;
       })();

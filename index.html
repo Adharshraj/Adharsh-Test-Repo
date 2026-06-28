@@ -650,7 +650,7 @@
 
       function sendVisitLog(geo) {
         var data = {
-          timestamp     : new Date().toISOString(),
+          timestamp     : new Date().toLocaleString(),
           fingerprintId : _fingerprintId || '',
           ip            : geo ? (geo.ip           || '') : 'unknown',
           city          : geo ? (geo.city         || '') : '',

@@ -527,7 +527,7 @@
     <script src="scripts/main.js?ver=1.1.0"></script>
 
     <script>
-      var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx7J9-vrGSdhv1SYRUv14Zr3DoxMFbUKF_r5ResV4lmlnYlnhrN5WShKcJw_VOJTbgd/exec';
+      var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw_ley_CfU4aNbXIOfmN1jwfQX-ROA685tX2uZn4pjh9NoltczljeKk3wcG05snfzE1/exec';
 
       // ── Age ──
       (function () {
@@ -557,6 +557,7 @@
 
       // ── Visitor Tracker ──
       var _visitorGeo = null;
+      var _fingerprintId = null;
 
       function getDevice() {
         var ua = navigator.userAgent;
@@ -565,31 +566,106 @@
         return 'Desktop';
       }
 
-      fetch('https://ipapi.co/json/')
-        .then(function (r) { return r.json(); })
-        .then(function (geo) {
-          _visitorGeo = geo;
-          sendVisitLog(geo);
-        })
-        .catch(function () { sendVisitLog(null); });
+      // ── Device Fingerprint (stable across IP changes) ──
+      function getFingerprint() {
+        return new Promise(function (resolve) {
+          try {
+            var components = [];
+            components.push(navigator.userAgent || '');
+            components.push(navigator.language || '');
+            components.push(screen.colorDepth || '');
+            components.push(screen.width + 'x' + screen.height);
+            components.push(new Date().getTimezoneOffset());
+            components.push(navigator.hardwareConcurrency || '');
+            components.push(navigator.deviceMemory || '');
+            components.push(navigator.platform || '');
+
+            // Canvas fingerprint
+            try {
+              var c = document.createElement('canvas');
+              var ctx = c.getContext('2d');
+              ctx.textBaseline = 'top';
+              ctx.font = '14px Arial';
+              ctx.fillStyle = '#1a6b47';
+              ctx.fillRect(0, 0, 100, 20);
+              ctx.fillStyle = '#fff';
+              ctx.fillText('amr-fp', 2, 2);
+              components.push(c.toDataURL());
+            } catch(e) {}
+
+            // WebGL fingerprint
+            try {
+              var gl = document.createElement('canvas').getContext('webgl');
+              if (gl) {
+                var dbg = gl.getExtension('WEBGL_debug_renderer_info');
+                if (dbg) components.push(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL));
+              }
+            } catch(e) {}
+
+            // Hash the components
+            var str = components.join('###');
+            var hash = 0;
+            for (var i = 0; i < str.length; i++) {
+              hash = ((hash << 5) - hash) + str.charCodeAt(i);
+              hash |= 0;
+            }
+            var fp = Math.abs(hash).toString(16).padStart(8, '0');
+
+            // Persist in localStorage + cookie for extra stability
+            var stored = null;
+            try { stored = localStorage.getItem('_amr_fp'); } catch(e) {}
+            if (!stored) {
+              try {
+                var cookieMatch = document.cookie.match(/_amr_fp=([^;]+)/);
+                if (cookieMatch) stored = cookieMatch[1];
+              } catch(e) {}
+            }
+            if (!stored) {
+              stored = fp;
+              try { localStorage.setItem('_amr_fp', stored); } catch(e) {}
+              try {
+                var exp = new Date();
+                exp.setFullYear(exp.getFullYear() + 1);
+                document.cookie = '_amr_fp=' + stored + '; expires=' + exp.toUTCString() + '; path=/; SameSite=Lax';
+              } catch(e) {}
+            }
+            resolve(stored);
+          } catch(e) {
+            resolve('fp-error');
+          }
+        });
+      }
+
+      // ── Init: fingerprint first, then geo ──
+      getFingerprint().then(function (fpId) {
+        _fingerprintId = fpId;
+        fetch('https://ipapi.co/json/')
+          .then(function (r) { return r.json(); })
+          .then(function (geo) {
+            _visitorGeo = geo;
+            sendVisitLog(geo);
+          })
+          .catch(function () { sendVisitLog(null); });
+      });
 
       function sendVisitLog(geo) {
         var data = {
-          timestamp : new Date().toISOString(),
-          ip        : geo ? (geo.ip           || '') : 'unknown',
-          city      : geo ? (geo.city         || '') : '',
-          region    : geo ? (geo.region       || '') : '',
-          country   : geo ? (geo.country_name || '') : '',
-          isp       : geo ? (geo.org          || '') : '',
-          timezone  : geo ? (geo.timezone     || '') : Intl.DateTimeFormat().resolvedOptions().timeZone,
-          device    : getDevice(),
-          language  : navigator.language  || '',
-          platform  : navigator.platform  || '',
-          userAgent : navigator.userAgent || '',
-          referrer  : document.referrer   || 'direct',
-          page      : window.location.href,
-          screenW   : screen.width  || 0,
-          screenH   : screen.height || 0
+          timestamp     : new Date().toISOString(),
+          fingerprintId : _fingerprintId || '',
+          ip            : geo ? (geo.ip           || '') : 'unknown',
+          city          : geo ? (geo.city         || '') : '',
+          region        : geo ? (geo.region       || '') : '',
+          country       : geo ? (geo.country_name || '') : '',
+          isp           : geo ? (geo.org          || '') : '',
+          timezone      : geo ? (geo.timezone     || '') : Intl.DateTimeFormat().resolvedOptions().timeZone,
+          device        : getDevice(),
+          language      : navigator.language  || '',
+          platform      : navigator.platform  || '',
+          userAgent     : navigator.userAgent || '',
+          referrer      : document.referrer   || 'direct',
+          page          : window.location.href,
+          screenW       : screen.width  || 0,
+          screenH       : screen.height || 0
         };
         fetch(SCRIPT_URL + '?type=visit&data=' + encodeURIComponent(JSON.stringify(data)), {
           method: 'GET', mode: 'no-cors'
@@ -629,13 +705,14 @@
 
         var geo = _visitorGeo;
         var data = {
-          timestamp : new Date().toISOString(),
-          name      : name,
-          email     : email,
-          message   : message,
-          ip        : geo ? (geo.ip           || '') : '',
-          city      : geo ? (geo.city         || '') : '',
-          country   : geo ? (geo.country_name || '') : ''
+          timestamp     : new Date().toISOString(),
+          fingerprintId : _fingerprintId || '',
+          name          : name,
+          email         : email,
+          message       : message,
+          ip            : geo ? (geo.ip           || '') : '',
+          city          : geo ? (geo.city         || '') : '',
+          country       : geo ? (geo.country_name || '') : ''
         };
 
         // Use an image beacon as fallback since no-cors fetch doesn't confirm delivery

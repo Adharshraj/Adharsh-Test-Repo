@@ -119,6 +119,38 @@
       .resume-text { flex: 1; min-width: 220px; }
       .resume-text h5 { font-family: var(--ff-head); font-size: 1.3rem; margin-bottom: .4rem; }
       .resume-text p { color: var(--muted); font-size: .88rem; margin: 0; }
+
+      /* ── Resume Download Name Modal ── */
+      .resume-modal-overlay {
+        display: none; position: fixed; inset: 0; background: rgba(13,13,13,.55);
+        z-index: 9999; align-items: center; justify-content: center; padding: 1rem;
+      }
+      .resume-modal-overlay.open { display: flex; }
+      .resume-modal-box {
+        background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow-lg);
+        padding: 2rem 2.2rem; max-width: 360px; width: 100%; text-align: center;
+        font-family: var(--ff-body); animation: resumeModalIn .25s ease;
+      }
+      @keyframes resumeModalIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      .resume-modal-box h5 { font-family: var(--ff-head); font-size: 1.15rem; margin-bottom: .3rem; color: var(--ink); }
+      .resume-modal-box p { color: var(--muted); font-size: .85rem; margin-bottom: 1.1rem; }
+      .resume-modal-box input {
+        width: 100%; padding: .7rem .9rem; border: 1px solid var(--border); border-radius: 6px;
+        font-size: .9rem; margin-bottom: .6rem; font-family: var(--ff-body);
+      }
+      .resume-modal-box input:focus { outline: none; border-color: var(--accent); }
+      .resume-modal-actions { display: flex; gap: .6rem; margin-top: .4rem; }
+      .resume-modal-actions button {
+        flex: 1; padding: .7rem 1rem; border: none; border-radius: 4px; font-weight: 600;
+        font-size: .8rem; letter-spacing: .05em; text-transform: uppercase; cursor: pointer;
+        transition: background .2s, transform .2s;
+      }
+      .resume-modal-submit { background: var(--ink); color: #fff; }
+      .resume-modal-submit:hover { background: var(--accent); transform: translateY(-1px); }
+      .resume-modal-cancel { background: transparent; color: var(--muted); border: 1px solid var(--border) !important; }
+      .resume-modal-cancel:hover { background: var(--paper); }
+      .resume-modal-error { color: #eb5757; font-size: .78rem; margin: -.3rem 0 .6rem; display: none; }
+      .resume-modal-error.show { display: block; }
       .btn-download { display: inline-flex; align-items: center; gap: .6rem; background: var(--ink); color: #fff !important; font-weight: 600; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; padding: .85rem 1.8rem; border-radius: 4px; text-decoration: none; transition: background .25s, transform .2s; white-space: nowrap; }
       .btn-download:hover { background: var(--accent); transform: translateY(-2px); color: #fff !important; text-decoration: none; }
  
@@ -443,9 +475,23 @@
             <h5>Adharsh Raj M R — Resume</h5>
             <p>Download my comprehensive resume to view my complete professional background, technical skills, project experience, and educational qualifications.</p>
           </div>
-          <a href="Adharsh Raj M R Resume.pdf" download="Adharsh_Raj_MR_Resume.pdf" class="btn-download">
+          <a href="Adharsh Raj M R Resume.pdf" download="Adharsh_Raj_MR_Resume.pdf" id="resume-download-link" class="btn-download" onclick="return handleResumeDownloadClick(event)">
             <i class="fa fa-download"></i> Download PDF
           </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Resume Download Name Modal ── -->
+    <div class="resume-modal-overlay" id="resume-modal-overlay" onclick="if(event.target===this) closeResumeModal()">
+      <div class="resume-modal-box">
+        <h5>Before you download</h5>
+        <p>Just your name — that's all!</p>
+        <input type="text" id="resume-modal-name" placeholder="Your name" maxlength="80" onkeydown="if(event.key==='Enter') submitResumeModal()">
+        <div class="resume-modal-error" id="resume-modal-error">Please enter your name.</div>
+        <div class="resume-modal-actions">
+          <button class="resume-modal-cancel" onclick="closeResumeModal()">Cancel</button>
+          <button class="resume-modal-submit" onclick="submitResumeModal()">Download</button>
         </div>
       </div>
     </div>
@@ -529,9 +575,61 @@
     <script>
       var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZ6Wquv1BuRRU4DUsHJ3WZNLMgxHfrDpKLofCMJKquKlyYkVwOD98mHfIGRIsUP7zA/exec';
 
+      // ── Resume Download Name Popup ──
+      // Set to false to turn this feature off completely — download will go back to working directly with no popup.
+      var RESUME_NAME_POPUP_ENABLED = true;
+
+      function handleResumeDownloadClick(e) {
+        if (!RESUME_NAME_POPUP_ENABLED) return true; // feature off: let the link download normally
+        e.preventDefault();
+        var input = document.getElementById('resume-modal-name');
+        input.value = '';
+        document.getElementById('resume-modal-error').classList.remove('show');
+        document.getElementById('resume-modal-overlay').classList.add('open');
+        setTimeout(function () { input.focus(); }, 50);
+        return false;
+      }
+
+      function closeResumeModal() {
+        document.getElementById('resume-modal-overlay').classList.remove('open');
+      }
+
+      function submitResumeModal() {
+        var input = document.getElementById('resume-modal-name');
+        var name  = input.value.trim();
+        var errEl = document.getElementById('resume-modal-error');
+        if (!name) { errEl.classList.add('show'); return; }
+        errEl.classList.remove('show');
+
+        logResumeDownload(name);
+        closeResumeModal();
+        triggerResumeDownload();
+      }
+
+      function logResumeDownload(name) {
+        var data = {
+          timestamp: new Date().toISOString(),
+          name: name,
+          page: window.location.href
+        };
+        fetch(SCRIPT_URL + '?type=resume_download&data=' + encodeURIComponent(JSON.stringify(data)), {
+          method: 'GET', mode: 'no-cors'
+        }).catch(function () {});
+      }
+
+      function triggerResumeDownload() {
+        var link = document.getElementById('resume-download-link');
+        var a = document.createElement('a');
+        a.href = link.getAttribute('href');
+        a.setAttribute('download', link.getAttribute('download'));
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+
       // ── Age ──
       (function () {
-        var birthDate = new Date(2000, 5, 23);
+        var birthDate = new Date(2000, 6, 23);
         var today = new Date();
         var age = today.getFullYear() - birthDate.getFullYear();
         var m = today.getMonth() - birthDate.getMonth();
@@ -557,7 +655,6 @@
 
       // ── Visitor Tracker ──
       var _visitorGeo = null;
-      var _fingerprintId = null;
 
       function getDevice() {
         var ua = navigator.userAgent;
@@ -566,106 +663,31 @@
         return 'Desktop';
       }
 
-      // ── Device Fingerprint (stable across IP changes) ──
-      function getFingerprint() {
-        return new Promise(function (resolve) {
-          try {
-            var components = [];
-            components.push(navigator.userAgent || '');
-            components.push(navigator.language || '');
-            components.push(screen.colorDepth || '');
-            components.push(screen.width + 'x' + screen.height);
-            components.push(new Date().getTimezoneOffset());
-            components.push(navigator.hardwareConcurrency || '');
-            components.push(navigator.deviceMemory || '');
-            components.push(navigator.platform || '');
-
-            // Canvas fingerprint
-            try {
-              var c = document.createElement('canvas');
-              var ctx = c.getContext('2d');
-              ctx.textBaseline = 'top';
-              ctx.font = '14px Arial';
-              ctx.fillStyle = '#1a6b47';
-              ctx.fillRect(0, 0, 100, 20);
-              ctx.fillStyle = '#fff';
-              ctx.fillText('amr-fp', 2, 2);
-              components.push(c.toDataURL());
-            } catch(e) {}
-
-            // WebGL fingerprint
-            try {
-              var gl = document.createElement('canvas').getContext('webgl');
-              if (gl) {
-                var dbg = gl.getExtension('WEBGL_debug_renderer_info');
-                if (dbg) components.push(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL));
-              }
-            } catch(e) {}
-
-            // Hash the components
-            var str = components.join('###');
-            var hash = 0;
-            for (var i = 0; i < str.length; i++) {
-              hash = ((hash << 5) - hash) + str.charCodeAt(i);
-              hash |= 0;
-            }
-            var fp = Math.abs(hash).toString(16).padStart(8, '0');
-
-            // Persist in localStorage + cookie for extra stability
-            var stored = null;
-            try { stored = localStorage.getItem('_amr_fp'); } catch(e) {}
-            if (!stored) {
-              try {
-                var cookieMatch = document.cookie.match(/_amr_fp=([^;]+)/);
-                if (cookieMatch) stored = cookieMatch[1];
-              } catch(e) {}
-            }
-            if (!stored) {
-              stored = fp;
-              try { localStorage.setItem('_amr_fp', stored); } catch(e) {}
-              try {
-                var exp = new Date();
-                exp.setFullYear(exp.getFullYear() + 1);
-                document.cookie = '_amr_fp=' + stored + '; expires=' + exp.toUTCString() + '; path=/; SameSite=Lax';
-              } catch(e) {}
-            }
-            resolve(stored);
-          } catch(e) {
-            resolve('fp-error');
-          }
-        });
-      }
-
-      // ── Init: fingerprint first, then geo ──
-      getFingerprint().then(function (fpId) {
-        _fingerprintId = fpId;
-        fetch('https://ipapi.co/json/')
-          .then(function (r) { return r.json(); })
-          .then(function (geo) {
-            _visitorGeo = geo;
-            sendVisitLog(geo);
-          })
-          .catch(function () { sendVisitLog(null); });
-      });
+      fetch('https://ipapi.co/json/')
+        .then(function (r) { return r.json(); })
+        .then(function (geo) {
+          _visitorGeo = geo;
+          sendVisitLog(geo);
+        })
+        .catch(function () { sendVisitLog(null); });
 
       function sendVisitLog(geo) {
         var data = {
-          timestamp     : new Date().toLocaleString(),
-          fingerprintId : _fingerprintId || '',
-          ip            : geo ? (geo.ip           || '') : 'unknown',
-          city          : geo ? (geo.city         || '') : '',
-          region        : geo ? (geo.region       || '') : '',
-          country       : geo ? (geo.country_name || '') : '',
-          isp           : geo ? (geo.org          || '') : '',
-          timezone      : geo ? (geo.timezone     || '') : Intl.DateTimeFormat().resolvedOptions().timeZone,
-          device        : getDevice(),
-          language      : navigator.language  || '',
-          platform      : navigator.platform  || '',
-          userAgent     : navigator.userAgent || '',
-          referrer      : document.referrer   || 'direct',
-          page          : window.location.href,
-          screenW       : screen.width  || 0,
-          screenH       : screen.height || 0
+          timestamp : new Date().toISOString(),
+          ip        : geo ? (geo.ip           || '') : 'unknown',
+          city      : geo ? (geo.city         || '') : '',
+          region    : geo ? (geo.region       || '') : '',
+          country   : geo ? (geo.country_name || '') : '',
+          isp       : geo ? (geo.org          || '') : '',
+          timezone  : geo ? (geo.timezone     || '') : Intl.DateTimeFormat().resolvedOptions().timeZone,
+          device    : getDevice(),
+          language  : navigator.language  || '',
+          platform  : navigator.platform  || '',
+          userAgent : navigator.userAgent || '',
+          referrer  : document.referrer   || 'direct',
+          page      : window.location.href,
+          screenW   : screen.width  || 0,
+          screenH   : screen.height || 0
         };
         fetch(SCRIPT_URL + '?type=visit&data=' + encodeURIComponent(JSON.stringify(data)), {
           method: 'GET', mode: 'no-cors'
@@ -705,14 +727,13 @@
 
         var geo = _visitorGeo;
         var data = {
-          timestamp     : new Date().toISOString(),
-          fingerprintId : _fingerprintId || '',
-          name          : name,
-          email         : email,
-          message       : message,
-          ip            : geo ? (geo.ip           || '') : '',
-          city          : geo ? (geo.city         || '') : '',
-          country       : geo ? (geo.country_name || '') : ''
+          timestamp : new Date().toISOString(),
+          name      : name,
+          email     : email,
+          message   : message,
+          ip        : geo ? (geo.ip           || '') : '',
+          city      : geo ? (geo.city         || '') : '',
+          country   : geo ? (geo.country_name || '') : ''
         };
 
         // Use an image beacon as fallback since no-cors fetch doesn't confirm delivery
